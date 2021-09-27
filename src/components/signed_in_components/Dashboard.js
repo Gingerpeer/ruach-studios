@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { Card, Button, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+import SignedInNav from "./signedIn_Nav"
 
 export default function Dashboard() {
   const [error, setError] = useState("")
@@ -13,7 +14,7 @@ export default function Dashboard() {
 
     try {
       await logout()
-      history.push("/login")
+      history.push("/")
     } catch {
       setError("Failed to log out")
     }
@@ -21,11 +22,14 @@ export default function Dashboard() {
 
   return (
     <>
+    <SignedInNav />
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
+          <div className='text-center'>
           <strong>Email:</strong> {currentUser.email}
+          </div>
           <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
             Update Profile
           </Link>

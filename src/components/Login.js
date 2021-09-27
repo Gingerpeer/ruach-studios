@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+import Nav from './Nav'
+import Footer from "./Footer"
 
 export default function Login() {
   const emailRef = useRef()
@@ -18,7 +20,7 @@ export default function Login() {
       setError("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
-      history.push("/")
+      history.push("/dashboard")
     } catch {
       setError("Failed to log in")
     }
@@ -28,6 +30,7 @@ export default function Login() {
 
   return (
     <>
+      <Nav />
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Log In</h2>
@@ -41,18 +44,16 @@ export default function Login() {
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" ref={passwordRef} required />
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+            <Button disabled={loading} className="w-100 btn-info" type="submit">
               Log In
             </Button>
           </Form>
           <div className="w-100 text-center mt-3">
-            <Link to="/forgot-password">Forgot Password?</Link>
+            <Link to="/forgot-password" className='text-info'>Forgot Password?</Link>
           </div>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
-        Need an account? <Link to="/signup">Sign Up</Link>
-      </div>
+      <Footer/>
     </>
   )
 }
